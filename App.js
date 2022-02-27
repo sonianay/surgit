@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, onPress, Alert} from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, Alert, Animated} from 'react-native';
 
 let deviceHeight = Dimensions.get('window').height;
 let deviceWidth = Dimensions.get('window').width;
@@ -14,18 +13,39 @@ export default class main extends React.Component {
   }
   
   handleStart = () => {
+    if(parseInt(this.state.seconds)-1<=0){
+      Alert.alert(
+        "What is log10?",
+        "Choose the correct answer"
+        [
+          {
+            text: "One",
+            onPress: () => alert("Correct")
+          },
+          {
+            text: "10",
+            onPress: () => alert("Incorrect")
+          },
+          {
+            text: "0",
+            onPress: () => alert("Incorrect")
+          }
+        ]
+      );
+    }
     this.setState({
-      totalSeconds: parseInt(this.state.hours*3600)+parseInt(this.state.minutes*60)+parseInt(this.state.seconds),
+      //totalSeconds: parseInt(this.state.hours*3600)+parseInt(this.state.minutes*60)+parseInt(this.state.seconds),
       seconds:String(parseInt(this.state.seconds)-1),
-    }),
-    this.changeTimer(this.state.totalSeconds)
+    })
+    //this.changeTimer(this.state.totalSeconds)
   }
 
   handleStop = () => {
-    alert("");
+    
   }
 
-  changeTimer = (total) => {
+/*CURRENTLY VERY BUGGY UNDER EXPO CLI, BUT OPERATING*/
+  /*changeTimer = (total) => {
     while(true){
       setTimeout(() => {
         if(this.state.total==0)
@@ -35,6 +55,7 @@ export default class main extends React.Component {
       }, 1000);
     }
   }
+*/
 
   render() {
     return(
@@ -42,6 +63,11 @@ export default class main extends React.Component {
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Surgit</Text>
         </View>
+
+        <View style={styles.descContainer}>
+          <Text style={styles.timeDisplay}>Select your timer. Make sure to choose the right answer to turn off the timer.</Text>
+        </View>
+
         <View style={styles.timerContainerTop}>
           <TextInput
             style={styles.timeDisplay}
@@ -109,6 +135,16 @@ const styles = StyleSheet.create({
     color: '#fff',
   },  
 
+  descContainer: {
+    height: deviceHeight/10.0,
+    width: deviceWidth/1.10,
+    marginTop: deviceHeight/200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10.0,
+    backgroundColor: '#111111',
+  },
+
   timerContainerTop: {
     height: deviceHeight/10.0,
     width: deviceWidth/1.10,
@@ -122,6 +158,7 @@ const styles = StyleSheet.create({
   },
   timeDisplay: {
     fontSize: deviceHeight/40.0,
+    fontStyle: "italic",
     color: '#fff',
   },
 
