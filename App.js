@@ -48,7 +48,18 @@ export default class main extends React.Component {
   /*changeTimer = (total) => {
     while(true){
       setTimeout(() => {
-        if(this.state.total==0)
+        if(this.state.minutes!=0 && this.state.seconds==0){
+          this.setState({
+            seconds:59,
+            minutes:parseInt(this.state.minutes)-1;
+          })
+        }
+        else if(this.state.hours!=0 && this.state.minutes==0){
+          this.setState({
+            minutes:59,
+            hours:parseInt(this.state.hours)-1;
+          })
+        }
         this.setState({
           total:total-1,
         })
